@@ -12,6 +12,7 @@ class Task:
     id: int
     title: str
     completed: bool = False
+    due: str | None = None
 
     def to_dict(self):
         return asdict(self)

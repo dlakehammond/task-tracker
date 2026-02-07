@@ -6,15 +6,23 @@ from .utils import format_task, next_id
 
 
 def cmd_add(args):
+    due = None
+    if "--due" in args:
+        idx = args.index("--due")
+        due = args[idx + 1]
+        args = args[:idx] + args[idx + 2:]
     title = " ".join(args)
     if not title:
         print("Error: task title required")
         sys.exit(1)
     tasks = load_tasks()
-    task = Task(id=next_id(tasks), title=title)
+    task = Task(id=next_id(tasks), title=title, due=due)
     tasks.append(task)
     save_tasks(tasks)
-    print(f"Added task {task.id}: {task.title}")
+    msg = f"Added task {task.id}: {task.title}"
+    if task.due:
+        msg += f" (due {task.due})"
+    print(msg)
 
 
 def cmd_list(args):

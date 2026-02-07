@@ -3,7 +3,10 @@
 
 def format_task(task):
     status = "x" if task.completed else " "
-    return f"[{status}] {task.id}: {task.title}"
+    line = f"[{status}] {task.id}: {task.title}"
+    if task.due:
+        line += f"  (due {task.due})"
+    return line
 
 
 def next_id(tasks):

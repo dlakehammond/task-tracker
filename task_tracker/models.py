@@ -24,8 +24,10 @@ class Task:
 def load_tasks():
     if not TASKS_FILE.exists():
         return []
-    with open(TASKS_FILE) as f:
-        return [Task.from_dict(t) for t in json.load(f)]
+    content = TASKS_FILE.read_text().strip()
+    if not content:
+        return []
+    return [Task.from_dict(t) for t in json.loads(content)]
 
 
 def save_tasks(tasks):
